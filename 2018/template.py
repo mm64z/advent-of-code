@@ -7,8 +7,15 @@ def processInput(fileName):
 
     return result
 
+
+def calculateResult(formattedInput):
+    for entry in formattedInput:
+
+    return result
+
 if __name__ == "__main__":
     import sys
-    result = processInput(sys.argv[1])
+    formattedInput = processInput(sys.argv[1])
+    result = calculateResult(formattedInput)
     print result
     
