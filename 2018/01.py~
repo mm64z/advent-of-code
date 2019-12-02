@@ -4,18 +4,12 @@ def processInput(fileName):
     result = 0
     with open(fileName) as f:
         for line in f:
+            result += int(line.strip())
             
-    return result
-
-
-def calculateResult(formattedInput):
-    for entry in formattedInput:
-
     return result
 
 if __name__ == "__main__":
     import sys
-    formattedInput = processInput(sys.argv[1])
-    result = calculateResult(formattedInput)
+    result = processInput(sys.argv[1])
     print result
     

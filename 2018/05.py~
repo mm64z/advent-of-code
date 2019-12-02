@@ -4,7 +4,8 @@ def processInput(fileName):
     result = 0
     with open(fileName) as f:
         for line in f:
-            
+            result = line.strip()
+    
     return result
 
 

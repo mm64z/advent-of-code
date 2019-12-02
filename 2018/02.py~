@@ -1,0 +1,46 @@
+#!/usr/bin/python
+
+def processInput(fileName):
+    result = 0
+    count2 = 0
+    count3 = 0
+    with open(fileName) as f:
+        for line in f:
+            line = line.strip()
+            iSeenIt = {}
+            iSeenString = []
+            for letter in line:
+                try:
+                    if iSeenIt[letter]:
+                        iSeenIt[letter] += 1
+                except KeyError:
+                    iSeenIt[letter] = 1
+
+            splitLine = set(line)
+            for already in iSeenString:
+                splitComp = set(already)
+                diff = splitComp.symmetric_difference(splitLine)
+                print len(diff)
+                if len(diff) == 1:
+                    return "".join(splitLine.difference(diff))
+            iSeenString.append(line)
+            
+                    
+            seen2 = False
+            seen3 = False
+            for key in iSeenIt:
+                if iSeenIt[key] == 2:
+                    seen2 = True
+                elif iSeenIt[key] == 3:
+                    seen3 = True
+            if seen2 == True:
+                count2 += 1
+            if seen3 == True:
+                count3 += 1
+               
+
+if __name__ == "__main__":
+    import sys
+    result = processInput(sys.argv[1])
+    print result
+    

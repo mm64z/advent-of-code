@@ -1,0 +1,68 @@
+#!/usr/bin/python
+
+def processInput(fileName):
+    result = []
+    maxX = 0, maxY = 0
+    i = 0
+    with open(fileName) as f:
+        for line in f:
+            (x, y) = line.strip().split(', ')
+            if x > maxX:
+                maxX = x
+            if y > maxY:
+                maxY = y
+            result.append([x, y, i])
+            i += 1
+            
+    return result, maxX, maxY
+
+# input is [x, y, i]
+def calculateResult(formattedInput, maxX, maxY):
+    closestPoints = []
+    disqualified = []
+    for i in range(maxX+2):
+        if i % 50 == 0:
+            print i
+        for j in range(maxY+2):
+            closest = []
+            closestDistance = 0
+            for point in formattedInput:
+                diff = abs(point[0] - i) + abs(point[1] - j)
+                if diff < closestDistance:
+                    closestDistance = diff
+                    closest = [point[2]]
+                elif diff == closestDistance:
+                    closest.append(point[2])
+            closestPoints.append(closest)
+
+            if i == 0 or i == maxX+1 or \
+               j == 0 or j == maxY+1:
+                for point in closest:
+                    if point not in disqualified:
+                        disqualified.append(point)
+
+    # {i -> count)
+    counts = {}
+    for square in closestPoints:
+        if len(square) == 1:
+            if square[0] in counts:
+                counts[square[0]] += 1
+            else:
+                counts[square[0]] = 1
+            
+
+    # find max, not counting disqualified
+    maxCount = 0
+    for point in counts:
+        if point not in disqualified:
+            if counts[point] > maxCount:
+                maxCount =  counts[point]
+    
+    return maxCount
+
+if __name__ == "__main__":
+    import sys
+    formattedInput, maxX, maxY = processInput(sys.argv[1])
+    result = calculateResult(formattedInput, maxX, maxY)
+    print result
+    
